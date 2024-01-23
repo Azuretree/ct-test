@@ -115,7 +115,7 @@ const ResultBtnContainer = styled.div(() => `
     }
 `);
 
-const LeftTestPage = () => {
+const TestPage = () => {
     const [enabled, setEnabled] = useState<boolean>(false);
 
     const params = useSearchParams();
@@ -214,4 +214,4 @@ const LeftTestPage = () => {
     );
 };
 
-export default LeftTestPage;
+export default TestPage;
