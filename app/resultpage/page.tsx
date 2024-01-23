@@ -3,12 +3,7 @@
 import Link from "next/link";
 import StyledContent from "../style";
 import React from "react";
-import styled from "@emotion/styled";
 import { useSearchParams } from "next/navigation";
-
-const StartButton = styled.button(() => `
-    padding: 12px;
-`);
 
 const ResultPage = () => {
     const params = useSearchParams();

@@ -6,6 +6,15 @@ import StyledContent from "../style";
 import { useSearchParams } from "next/navigation";
 import styled from "@emotion/styled";
 
+const CommonButtonStyles = `
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+`;
+
 const WrapTestContainer = styled.div(() => `
     display: flex;
     text-align: center;
@@ -45,12 +54,7 @@ const WrapSelectBtnContainer = styled.div<{ enabled: boolean }>(({ enabled }) =>
     gap: 16px;
 
     & button {
-        padding: 14px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 12px;
-        border: none;
-        font-weight: bold;
+        ${CommonButtonStyles}
         cursor: ${enabled ? 'not-allowed' : 'pointer'};
     }
 `);
@@ -59,23 +63,26 @@ const GreenButton = styled.button<{ enabled: boolean }>(({ enabled }) => `
     background-color: #00D008;
     color: #FFFFFF;
     opacity: ${enabled ? .5 : 1};
+    ${CommonButtonStyles}
 `);
 
 const GrayButton = styled.button<{ enabled: boolean }>(({ enabled }) => `
     background-color: #C3C3C3;
     color: #535353;
     opacity: ${enabled ? .5 : 1};
+    ${CommonButtonStyles}
 `);
 
 const RedButton = styled.button<{ enabled: boolean }>(({ enabled }) => `
     background-color: #FF5C5C;
     color: #FFFFFF;
     opacity: ${enabled ? .5 : 1};
+    ${CommonButtonStyles}
 `);
 
 const ResultBtn = styled.button(() => `
     width: 100%;
-    max-width: 1-0%;
+    max-width: 100%;  // 수정
     background-color: #0075FF;  
     color: #FFFFFF;
     border: none;
@@ -92,9 +99,9 @@ const ResultBtn = styled.button(() => `
     & svg {
         position: relative;
         top: 2px;
-        width: 16px;  // Adjust the width as needed
-        height: 16px; // Adjust the height as needed
-        margin-left: 8px; // Add margin as needed to separate text and icon
+        width: 16px;
+        height: 16px;
+        margin-left: 8px;
     }
 `);
 
@@ -170,7 +177,7 @@ const LeftTestPage = () => {
                 <p>{currentFrequencyIndex + 1} / {frequencies.length}</p>
                 <h2>현재 주파수가 잘 들리나요?</h2>
                 <CurrentFrequency>{frequencies[currentFrequencyIndex]}Hz</CurrentFrequency>
-                <audio controls autoPlay loop>
+                <audio controls autoPlay loop> {/* loop 추가 */}
                     <source src="/test.mp3" type="audio/mp3" />
                 </audio>
                 <WrapSelectBtnContainer enabled={enabled}>
