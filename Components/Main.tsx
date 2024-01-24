@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import StyledContent from "@/app/style";
@@ -64,6 +64,7 @@ export const Main = () => {
     const [enabled, setEnabled] = useState<boolean>(false);
 
     return (
+        <Suspense>
         <StyledContent>
             <Image src='/ct-logo.png' width={180} height={180} alt={""} className="main-logo" />
             <h1>나의 청력은 얼마나 좋을까?</h1>
@@ -87,6 +88,7 @@ export const Main = () => {
                 <li>정상적이지 않은 방법으로 사이트 접근 시 결과가 다르게 나와요.</li>
             </InfoContainer>
         </StyledContent>
+        </Suspense>
     );
 };
 
