@@ -72,9 +72,7 @@ export const Main = () => {
                 setName(e.target.value);
                 setEnabled(e.target.value.trim() !== '');
             }} />
-
-
-            <Link href={{ pathname: '/testpage', query: { name: encodeURIComponent(name) } }}><StartButton disabled={name.trim() === ''} enabled={enabled} onClick={() => setEnabled(true)}>
+            <Link href={{ pathname: '/testpage', query: { name } }}><StartButton disabled={name.trim() === ''} enabled={enabled} onClick={() => setEnabled(true)}>
                 시작하기
             </StartButton>
 
