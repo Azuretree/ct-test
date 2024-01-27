@@ -3,11 +3,12 @@ import { TestPageComponents } from "./TestPageComponents";
 
 const TestPage = ({ searchParams }: any) => {
 
-    console.log(searchParams)
+    const yourName = searchParams.name;
+
+    console.log(yourName)
 
     return (
         <>
-            <p>{searchParams.name}</p>
             <TestPageComponents />
         </>
     );

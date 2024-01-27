@@ -2,8 +2,9 @@
 
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import StyledContent from "../style";
+import { NameContext } from "@/Components/Main";
 
 export const CommonButtonStyles = `
     padding: 14px;
@@ -115,11 +116,14 @@ export const ResultBtnContainer = styled.div(() => `
 `);
 export const TestPageComponents = () => {
     const [enabled, setEnabled] = useState<boolean>(false);
-
     const [currentFrequencyIndex, setCurrentFrequencyIndex] = useState<number>(0);
     const [totalScore, setTotalScore] = useState<number>(0);
     const [showResultsButton, setShowResultsButton] = useState<boolean>(false);
     const [resultMessage, setResultMessage] = useState<string>("");
+
+    const getName = useContext(NameContext);
+
+
 
     const frequencies: string[] = ['(왼쪽) 125', '(오른쪽) 125', '(왼쪽) 250', '(오른쪽) 250', '(왼쪽) 500', '(오른쪽) 500',
         '(왼쪽) 1000', '(오른쪽) 1000', '(왼쪽) 2000', '(오른쪽) 2000', '(왼쪽) 4000', '(오른쪽) 4000',
