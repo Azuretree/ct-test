@@ -144,10 +144,12 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
         // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
-            setScores((prevScores) => [...prevScores, score]); // 버튼 클릭으로 점수를 scores 배열에 추가
+            setScores((prevScores) => [...prevScores, score]);
             setEnabled(false);
         } else {
             const finalScore = scores.reduce((acc, curr) => acc + curr, 0) + score;
+            const updatedScores = [...scores, score];
+            setScores(updatedScores);
             determineResult(finalScore);
             setShowResultsButton(true);
             setEnabled(true);
@@ -203,7 +205,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                             onClick={() => {
                                 handleButtonClick(response.score);
                             }}
-                            disabled={showResultsButton || enabled}
+
                             enabled={enabled}
                         >
                             {response.label}
@@ -211,7 +213,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                     ))}
                 </WrapSelectBtnContainer>
                 <ResultBtnContainer>
-                    {showResultsButton && (
+                    {showResultsButton && currentFrequencyIndex === frequencies.length - 1 && (
                         <Link
                             href={{
                                 pathname: '/resultpage',
