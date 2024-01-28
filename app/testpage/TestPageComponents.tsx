@@ -114,6 +114,18 @@ export const ResultBtnContainer = styled.div(() => `
     }
 `);
 
+const PlayPauseBtn = styled.button(() => `
+    width: 100%;
+    max-width: 20%;
+    padding: 12px;
+    background-color: #949494;  
+    color: #FFFFFF;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    margin: 20px auto;
+`);
+
 export const frequencies: string[] = ['(왼쪽) 125', '(오른쪽) 125', '(왼쪽) 250', '(오른쪽) 250', '(왼쪽) 500', '(오른쪽) 500',
     '(왼쪽) 1000', '(오른쪽) 1000', '(왼쪽) 2000', '(오른쪽) 2000', '(왼쪽) 4000', '(오른쪽) 4000',
     '(왼쪽) 8000', '(오른쪽) 8000'
@@ -133,12 +145,6 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const [scores, setScores] = useState<number[]>([]);
     const [playPauseText, setPlayPauseText] = useState<string>('재생');
     const audioRef = useRef<HTMLAudioElement | null>(null);
-
-    const buttonAns = [
-        { label: '네, 잘들려요', score: 2, style: GreenButton },
-        { label: '잘 모르겠어요.', score: 1, style: GrayButton },
-        { label: '아니요, 잘 안들려요.', score: 0, style: RedButton },
-    ];
 
     const handleButtonClick = (score: number) => {
         // 다음 주파수로 이동
@@ -195,9 +201,9 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                 <audio ref={audioRef} controls autoPlay loop style={{ display: 'none' }}>
                     <source src="/test.mp3" type="audio/mp3" />
                 </audio>
-                <button onClick={handlePlayPause}>
+                <PlayPauseBtn onClick={handlePlayPause}>
                     {playPauseText}
-                </button>
+                </PlayPauseBtn>
                 <WrapSelectBtnContainer enabled={enabled}>
                     {buttonAns.map((response, index) => (
                         <response.style
@@ -205,7 +211,6 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                             onClick={() => {
                                 handleButtonClick(response.score);
                             }}
-
                             enabled={enabled}
                         >
                             {response.label}

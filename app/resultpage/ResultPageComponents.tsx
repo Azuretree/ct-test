@@ -14,7 +14,7 @@ import {
     Legend,
     Filler
 } from 'chart.js';
-import { frequencies } from "../testpage/TestPageComponents";
+import { buttonAns, frequencies } from "../testpage/TestPageComponents";
 import styled from "@emotion/styled";
 
 ChartJS.register(
@@ -70,7 +70,6 @@ export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
 }) => {
 
     const labels = frequencies;
-    console.log(scores)
     const data = {
         labels,
         datasets: [
@@ -95,7 +94,18 @@ export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
         scales: {
             y: {
                 ticks: {
-                    callback: (value: number | any) => value,
+                    stepSize: 1,
+                    callback: (value: number | any) => {
+                        if (value === 0) {
+                            return buttonAns[2].label;
+                        } else if (value === 1) {
+                            return buttonAns[1].label;
+                        } else if (value === 2) {
+                            return buttonAns[0].label;
+                        } else {
+                            return '';
+                        }
+                    },
                 },
             },
         },
