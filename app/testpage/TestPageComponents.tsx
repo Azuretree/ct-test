@@ -216,7 +216,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                             href={{
                                 pathname: '/resultpage',
                                 query: {
-                                    resultMessage,
+                                    resultMessage: encodeURIComponent(resultMessage),
                                     name: testerName,
                                     scores
                                 },
