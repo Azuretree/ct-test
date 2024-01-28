@@ -6,7 +6,7 @@ const ResultPage = ({ searchParams }: {
     searchParams: {
         name?: string,
         resultMessage?: string
-        scores?: number[]
+        scores: number[]
     }
 }) => {
     const { name, resultMessage, scores } = searchParams;
@@ -14,7 +14,7 @@ const ResultPage = ({ searchParams }: {
 
     return (
         <>
-            <ResultPageComponents testerName={name} resultMessage={resultMessage} scores={scores as number[]} frequencies={[]} />
+            <ResultPageComponents testerName={name} resultMessage={resultMessage} scores={scores} />
         </>
     );
 };

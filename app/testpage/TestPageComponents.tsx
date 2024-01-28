@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import StyledContent from "../style";
 
 export const CommonButtonStyles = `
@@ -113,19 +113,26 @@ export const ResultBtnContainer = styled.div(() => `
         max-width: 80%;
     }
 `);
+
+export const frequencies: string[] = ['(왼쪽) 125', '(오른쪽) 125', '(왼쪽) 250', '(오른쪽) 250', '(왼쪽) 500', '(오른쪽) 500',
+    '(왼쪽) 1000', '(오른쪽) 1000', '(왼쪽) 2000', '(오른쪽) 2000', '(왼쪽) 4000', '(오른쪽) 4000',
+    '(왼쪽) 8000', '(오른쪽) 8000'
+];
+
+export const buttonAns = [
+    { label: '네, 잘들려요', score: 2, style: GreenButton },
+    { label: '잘 모르겠어요.', score: 1, style: GrayButton },
+    { label: '아니요, 잘 안들려요.', score: 0, style: RedButton },
+];
+
 export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const [enabled, setEnabled] = useState<boolean>(false);
     const [currentFrequencyIndex, setCurrentFrequencyIndex] = useState<number>(0);
     const [showResultsButton, setShowResultsButton] = useState<boolean>(false);
     const [resultMessage, setResultMessage] = useState<string>("");
     const [scores, setScores] = useState<number[]>([]);
-
-
-
-    const frequencies: string[] = ['(왼쪽) 125', '(오른쪽) 125', '(왼쪽) 250', '(오른쪽) 250', '(왼쪽) 500', '(오른쪽) 500',
-        '(왼쪽) 1000', '(오른쪽) 1000', '(왼쪽) 2000', '(오른쪽) 2000', '(왼쪽) 4000', '(오른쪽) 4000',
-        '(왼쪽) 8000', '(오른쪽) 8000'
-    ];
+    const [playPauseText, setPlayPauseText] = useState<string>('재생');
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const buttonAns = [
         { label: '네, 잘들려요', score: 2, style: GreenButton },
@@ -137,7 +144,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
         // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
-            setScores((prevScores) => [...prevScores, score]);
+            setScores((prevScores) => [...prevScores, score]); // 버튼 클릭으로 점수를 scores 배열에 추가
             setEnabled(false);
         } else {
             const finalScore = scores.reduce((acc, curr) => acc + curr, 0) + score;
@@ -165,6 +172,17 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
         }
     };
 
+    const handlePlayPause = () => {
+        if (audioRef.current) {
+            if (audioRef.current.paused) {
+                audioRef.current.play();
+            } else {
+                audioRef.current.pause();
+            }
+            setPlayPauseText((prevText) => (prevText === '재생' ? '일시정지' : '재생'));
+        }
+    };
+
     return (
 
         <StyledContent>
@@ -172,9 +190,12 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                 <p>{currentFrequencyIndex + 1} / {frequencies.length}</p>
                 <h2>현재 주파수가 잘 들리나요?</h2>
                 <CurrentFrequency>{frequencies[currentFrequencyIndex]}Hz</CurrentFrequency>
-                <audio controls autoPlay loop>
+                <audio ref={audioRef} controls autoPlay loop style={{ display: 'none' }}>
                     <source src="/test.mp3" type="audio/mp3" />
                 </audio>
+                <button onClick={handlePlayPause}>
+                    {playPauseText}
+                </button>
                 <WrapSelectBtnContainer enabled={enabled}>
                     {buttonAns.map((response, index) => (
                         <response.style
@@ -197,8 +218,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                                 query: {
                                     resultMessage,
                                     name: testerName,
-                                    scores: JSON.stringify(scores), // scores 배열을 JSON 문자열로 변환
-                                    frequencies: JSON.stringify(frequencies), // frequencies 배열을 JSON 문자열로 변환
+                                    scores
                                 },
                             }}
                         >
