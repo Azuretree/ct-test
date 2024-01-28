@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import StyledContent from "../style";
-import { NameContext } from "@/Components/Main";
 
 export const CommonButtonStyles = `
     padding: 14px;
@@ -114,14 +113,12 @@ export const ResultBtnContainer = styled.div(() => `
         max-width: 80%;
     }
 `);
-export const TestPageComponents = () => {
+export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const [enabled, setEnabled] = useState<boolean>(false);
     const [currentFrequencyIndex, setCurrentFrequencyIndex] = useState<number>(0);
-    const [totalScore, setTotalScore] = useState<number>(0);
     const [showResultsButton, setShowResultsButton] = useState<boolean>(false);
     const [resultMessage, setResultMessage] = useState<string>("");
-
-    const getName = useContext(NameContext);
+    const [scores, setScores] = useState<number[]>([]);
 
 
 
@@ -140,10 +137,10 @@ export const TestPageComponents = () => {
         // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
-            setTotalScore((prevScore) => prevScore + score);
+            setScores((prevScores) => [...prevScores, score]);
             setEnabled(false);
         } else {
-            const finalScore = totalScore + score;
+            const finalScore = scores.reduce((acc, curr) => acc + curr, 0) + score;
             determineResult(finalScore);
             setShowResultsButton(true);
             setEnabled(true);
@@ -194,10 +191,17 @@ export const TestPageComponents = () => {
                 </WrapSelectBtnContainer>
                 <ResultBtnContainer>
                     {showResultsButton && (
-                        <Link href={{
-                            pathname: '/resultpage',
-                            query: { resultMessage }
-                        }}>
+                        <Link
+                            href={{
+                                pathname: '/resultpage',
+                                query: {
+                                    resultMessage,
+                                    name: testerName,
+                                    scores: JSON.stringify(scores), // scores 배열을 JSON 문자열로 변환
+                                    frequencies: JSON.stringify(frequencies), // frequencies 배열을 JSON 문자열로 변환
+                                },
+                            }}
+                        >
                             <ResultBtn>
                                 결과 보기
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">

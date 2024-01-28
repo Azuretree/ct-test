@@ -1,15 +1,15 @@
 import React from "react";
 import { TestPageComponents } from "./TestPageComponents";
+import { redirect } from "next/navigation";
 
 const TestPage = ({ searchParams }: any) => {
 
-    const yourName = searchParams.name;
-
-    console.log(yourName)
+    const testerName = searchParams.name;
+    if (!testerName) redirect("/");
 
     return (
         <>
-            <TestPageComponents />
+            <TestPageComponents testerName={testerName} />
         </>
     );
 };
