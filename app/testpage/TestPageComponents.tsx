@@ -175,8 +175,6 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
             setResultMessage('50대');
         } else if (finalScore > 2) {
             setResultMessage('60대');
-        } else {
-            setResultMessage('70대');
         }
     };
 
@@ -198,7 +196,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                 <p>{currentFrequencyIndex + 1} / {frequencies.length}</p>
                 <h2>현재 주파수가 잘 들리나요?</h2>
                 <CurrentFrequency>{frequencies[currentFrequencyIndex]}Hz</CurrentFrequency>
-                <audio ref={audioRef} controls autoPlay loop style={{ display: 'none' }}>
+                <audio ref={audioRef} controls loop style={{ display: 'none' }}>
                     <source src="/test.mp3" type="audio/mp3" />
                 </audio>
                 <PlayPauseBtn onClick={handlePlayPause}>
@@ -212,6 +210,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                                 handleButtonClick(response.score);
                             }}
                             enabled={enabled}
+                            disabled={showResultsButton || enabled}
                         >
                             {response.label}
                         </response.style>

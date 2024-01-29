@@ -46,7 +46,7 @@ export const NameInput = styled.input(() => `
 export const InfoContainer = styled.div(() => `
     width: 100%;
     max-width: 50%;
-    background-color: #E3E3E3;
+    background-color: #EFEFEF;
     margin: 20px auto;
     padding: 16px;
     border-radius: 12px;
@@ -57,7 +57,9 @@ export const InfoContainer = styled.div(() => `
     }
 
     & li {
+        margin: 10px 0;
         text-align: left;
+        color: #929292;
     }
 
     @media(max-width: 672px) {
@@ -101,7 +103,9 @@ export const Main = () => {
                 <h2>테스트 하기 전, 확인해주세요!</h2>
                 <li>이 사이트는 전문 의료용이 아닌 단순 재미를 위해 만들어졌어요. 과몰입에 주의해주세요!</li>
                 <li>이름을 입력 후 시작하기 버튼을 누르시면 주파수 별로 왼쪽, 오른쪽 귀를 번갈아가며 테스트할거에요.</li>
+                <li>청력 테스트이기 때문에 헤드폰 혹은 이어폰 착용 후 테스트에 참여하는 것을 추천해요.</li>
                 <li>정상적이지 않은 방법으로 사이트 접근시도 시 사이트 내에서 감지하여 다시 홈으로 돌아와요.</li>
+                <h2></h2>
             </InfoContainer>
         </StyledContent>
     );

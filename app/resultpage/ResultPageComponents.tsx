@@ -63,6 +63,42 @@ const ResetBtnContainer = styled.div(() => `
     margin: 20px auto;
 `);
 
+const TestStandardContainer = styled.div(() => `
+    width: 100%;
+    max-width: 50%;
+    background-color: #EFEFEF;
+    margin: 20px auto;
+    padding: 16px;
+    border-radius: 12px;    
+
+    & h2 {
+        margin: 0;
+    }
+
+    & p {
+        margin: 0;
+        color: #929292;
+        margin: 10px 0;
+    }
+
+    @media(max-width: 672px) {
+        max-width: 90%;
+    }
+`);
+
+const ResultAge = styled.p(() => `
+    color: #0075FF;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 14px 0;
+`);
+
+const TotalScore = styled.p(() => `
+    font-size: 24px;
+    font-weight: bold;
+    margin: 14px 0;
+`);
+
 export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
     testerName: string,
     resultMessage: string,
@@ -111,12 +147,17 @@ export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
         },
     };
 
+    const calculateTotalScore = () => {
+        return scores.map(e => Number(e)).reduce((acc, curr) => acc + curr, 0);
+    };
+
     return (
         <StyledContent>
             <div className="contents-container">
                 <img src="/result.png" width={200} />
-                <h1>{`${decodeURIComponent(testerName)} 님의 청력 테스트 결과는?`}</h1>
-                <h2>{decodeURIComponent(resultMessage)}</h2>
+                <h1>{decodeURIComponent(testerName)}님의<br /> 청력 테스트 결과는?</h1>
+                <ResultAge>{decodeURIComponent(resultMessage)}</ResultAge>
+                <TotalScore>총점: {calculateTotalScore()}점</TotalScore>
                 <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>
                 <Line data={data} options={options} />
                 <ResetBtnContainer>
@@ -129,6 +170,16 @@ export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
                         </ResetBtn>
                     </Link>
                 </ResetBtnContainer>
+                <TestStandardContainer>
+                    <h2>테스트 기준</h2>
+                    <p>25점 이상: 10대</p>
+                    <p>24점 ~ 21점: 20대</p>
+                    <p>20점 ~ 16점: 30대</p>
+                    <p>15점 ~ 11점: 40대</p>
+                    <p>10점 ~ 7점: 50대</p>
+                    <p>6점 ~ 3점: 60대</p>
+                    <p>2점 이하: 70대 이상</p>
+                </TestStandardContainer>
             </div>
         </StyledContent>
     );
