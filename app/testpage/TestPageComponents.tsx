@@ -223,23 +223,22 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
 
   useEffect(() => {
     if (audioRef.current) {
-        const prefix = currentFrequencyIndex % 2 === 0 ? 'left' : 'right';
-        const frequency = frequencies[currentFrequencyIndex].replace(/\D/g, '');
-        const audioFile = `/${prefix}_${frequency}Hz.mp3`;
+      const prefix = currentFrequencyIndex % 2 === 0 ? "left" : "right";
+      const frequency = frequencies[currentFrequencyIndex].replace(/\D/g, "");
+      const audioFile = `/${prefix}_${frequency}Hz.mp3`;
 
-        audioRef.current.src = audioFile;
-        audioRef.current.load();
+      audioRef.current.src = audioFile;
+      audioRef.current.load();
 
-        if (!audioRef.current.paused && audioRef.current.currentTime > 0) {
-            // 오디오가 이미 재생 중이라면, 처음부터 다시 재생
-            audioRef.current.currentTime = 0;
-        }
+      if (!audioRef.current.paused && audioRef.current.currentTime > 0) {
+        audioRef.current.currentTime = 0;
+      }
 
-        if (!enabled) {
-            audioRef.current.play();
-        }
+      if (!enabled) {
+        audioRef.current.play();
+      }
     }
-}, [currentFrequencyIndex, enabled]);
+  }, [currentFrequencyIndex, enabled]);
 
   return (
     <StyledContent>
@@ -254,6 +253,13 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
         <audio ref={audioRef} controls loop style={{ display: "none" }}>
           <source
             src={`/left_${frequencies[currentFrequencyIndex].replace(
+              /\D/g,
+              ""
+            )}Hz.mp3`}
+            type="audio/mp3"
+          />
+          <source
+            src={`/right_${frequencies[currentFrequencyIndex].replace(
               /\D/g,
               ""
             )}Hz.mp3`}
