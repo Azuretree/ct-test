@@ -190,10 +190,10 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const [showResultsButton, setShowResultsButton] = useState<boolean>(false);
     const [resultMessage, setResultMessage] = useState<string>("");
     const [scores, setScores] = useState<number[]>([]);
-    const [playPauseText, setPlayPauseText] = useState<string>("재생");
+    const [playPauseText, setPlayPauseText] = useState<string>("일시정지");
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const handleButtonClick = useCallback((score: number) => {
+    const handleButtonClick = (score: number) => {
         // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
@@ -208,9 +208,9 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
             determineResult(finalScore);
             setShowResultsButton(true);
             setEnabled(true);
+            setPlayPauseText("일시정지");
         }
-    }, [currentFrequencyIndex, scores]);
-    console.log(scores)
+    };
 
     const determineResult = (finalScore: number) => {
         if (finalScore >= 25) {
@@ -229,7 +229,6 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
             setResultMessage("70대 이상");
         }
     };
-
     const handlePlayPause = () => {
         if (audioRef.current) {
             if (audioRef.current.paused) {
@@ -272,7 +271,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                 <CurrentFrequency>
                     {frequencies[currentFrequencyIndex]}Hz
                 </CurrentFrequency>
-                <audio ref={audioRef} controls loop style={{ display: "none" }}>
+                <audio ref={audioRef} autoPlay loop>
                     <source
                         src={`/left_${frequencies[currentFrequencyIndex].replace(
                             /\D/g,
