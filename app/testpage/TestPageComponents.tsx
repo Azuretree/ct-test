@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import StyledContent from "../style";
 
 export const CommonButtonStyles = `
@@ -193,7 +193,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const [playPauseText, setPlayPauseText] = useState<string>("재생");
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const handleButtonClick = (score: number) => {
+    const handleButtonClick = useCallback((score: number) => {
         // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
@@ -209,7 +209,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
             setShowResultsButton(true);
             setEnabled(true);
         }
-    };
+    }, [currentFrequencyIndex, scores]);
     console.log(scores)
 
     const determineResult = (finalScore: number) => {

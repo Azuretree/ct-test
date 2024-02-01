@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 const ResultPage = ({ searchParams }: {
     searchParams: {
         name: string,
-        resultMessage: string
+        resultMessage: string,
         scores: number[]
     }
 }) => {
