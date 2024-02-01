@@ -99,8 +99,8 @@ const TotalScore = styled.p(() => `
     margin: 14px 0;
 `);
 
-export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
-    testerName: string,
+export const ResultPageComponents = ({ name, resultMessage, scores }: {
+    name: string,
     resultMessage: string,
     scores: number[],
 }) => {
@@ -155,7 +155,7 @@ export const ResultPageComponents = ({ testerName, resultMessage, scores }: {
         <StyledContent>
             <div className="contents-container">
                 <img src="/result.png" width={200} />
-                <h1>{decodeURIComponent(testerName)}님의<br /> 청력 테스트 결과는?</h1>
+                <h1>{decodeURIComponent(name)}님의<br /> 청력 테스트 결과는?</h1>
                 <ResultAge>{decodeURIComponent(resultMessage)}</ResultAge>
                 <TotalScore>총점: {calculateTotalScore()}점</TotalScore>
                 <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>

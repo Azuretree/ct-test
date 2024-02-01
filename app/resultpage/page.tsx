@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 
 const ResultPage = ({ searchParams }: {
     searchParams: {
-        name?: string,
-        resultMessage?: string
+        name: string,
+        resultMessage: string
         scores: number[]
     }
 }) => {
@@ -14,7 +14,7 @@ const ResultPage = ({ searchParams }: {
 
     return (
         <>
-            <ResultPageComponents testerName={name} resultMessage={resultMessage} scores={scores} />
+            <ResultPageComponents name={name} resultMessage={resultMessage} scores={scores} />
         </>
     );
 };
