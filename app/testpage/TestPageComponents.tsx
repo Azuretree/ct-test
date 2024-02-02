@@ -33,6 +33,21 @@ export const WrapTestContainer = styled.div(
         outline: none;
     }
 
+    .progress-bar-container {
+        width: 100%;
+        height: 10px;
+        background-color: #EDEDED; /* 프로그레스 바 컨테이너의 배경 색 */
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        border-radius: 5px;
+        background-color: #0075FF; /* 검은색 프로그레스 바 */
+        transition: width 0.2s ease; /* 프로그레스 바의 너비에 애니메이션 효과 추가 */
+    }
+
     @media(max-width: 672px) {
         max-width: 90%;
     }
@@ -264,9 +279,15 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     return (
         <StyledContent>
             <WrapTestContainer>
-                <p>
-                    {currentFrequencyIndex + 1} / {frequencies.length}
-                </p>
+                <p>{currentFrequencyIndex + 1} / {frequencies.length}</p>
+            <div className="progress-bar-container">
+                    <div
+                        className="progress-bar"
+                        style={{
+                            width: `${((currentFrequencyIndex + 1) / frequencies.length) * 100}%`,
+                        }}
+                    />
+                </div>
                 <h2>현재 주파수가 잘 들리나요?</h2>
                 <CurrentFrequency>
                     {frequencies[currentFrequencyIndex]}Hz
