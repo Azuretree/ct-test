@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 const TestPage = ({ searchParams }: any) => {
 
-    const testerName = searchParams.name;
+    const testerName: string = searchParams.name;
     if (!testerName) redirect("/");
 
     return (

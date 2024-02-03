@@ -74,7 +74,6 @@ export const WrapSelectBtnContainer = styled.div<{ enabled: boolean }>(
     & button {
         ${CommonButtonStyles}
         cursor: ${enabled ? "not-allowed" : "pointer"};
-        transition: .2s all ease;
     }
 `
 );
@@ -87,7 +86,7 @@ export const GreenButton = styled.button<{ enabled: boolean }>(
     opacity: ${enabled ? 0.5 : 1};
     ${CommonButtonStyles}
 
-    &:hover {
+    &:active {
         background-color: #00D008;
         color: #FFFFFF;
     }
@@ -102,7 +101,7 @@ export const GrayButton = styled.button<{ enabled: boolean }>(
     opacity: ${enabled ? 0.5 : 1};
     ${CommonButtonStyles}
 
-    &:hover {
+    &:active {
         background-color: #535353;
         color: #FFFFFF;
     }
@@ -117,7 +116,7 @@ export const RedButton = styled.button<{ enabled: boolean }>(
     opacity: ${enabled ? 0.5 : 1};
     ${CommonButtonStyles}
 
-    &:hover {
+    &:active {
         background-color: #FF5C5C;
         color: #FFFFFF;
     }
@@ -163,8 +162,8 @@ export const ResultBtnContainer = styled.div(
 `
 );
 
-const PlayPauseBtn = styled.button(
-    () => `
+const PlayPauseBtn = styled.button<{ enabled: boolean }>(
+    ({ enabled }) => `
     width: 30%;
     padding: 12px;
     background-color: #949494;  
@@ -173,6 +172,8 @@ const PlayPauseBtn = styled.button(
     border: none;
     border-radius: 12px;
     margin: 20px auto;
+    opacity: ${enabled ? 0.5 : 1};
+    cursor: ${enabled ? "not-allowed" : "pointer"};
 `
 );
 
@@ -199,7 +200,11 @@ export const buttonAns = [
     { label: "아니요, 잘 안들려요.", score: 0, style: RedButton },
 ];
 
-export const TestPageComponents = ({ testerName }: { testerName: string }) => {
+interface TesterNameProps {
+    testerName: string;
+}
+
+export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T) => {
     const [enabled, setEnabled] = useState<boolean>(false);
     const [currentFrequencyIndex, setCurrentFrequencyIndex] = useState<number>(0);
     const [showResultsButton, setShowResultsButton] = useState<boolean>(false);
@@ -209,21 +214,21 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const handleButtonClick = (score: number) => {
-        // 다음 주파수로 이동
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
             setScores((prevScores) => [...prevScores, score]);
             setEnabled(false);
+            handlePlayPause();
+            setPlayPauseText("일시정지");
         } else {
             const finalScore = scores.reduce((acc, curr) => acc + curr, 0) + score;
             const updatedScores = [...scores, score];
             setScores(updatedScores);
-
-            // 결과 버튼을 눌렀을 때의 동작 추가
             determineResult(finalScore);
             setShowResultsButton(true);
             setEnabled(true);
-            setPlayPauseText("일시정지");
+            setPlayPauseText("재생");
+            handlePlayPause();
         }
     };
 
@@ -244,21 +249,21 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
             setResultMessage("70대 이상");
         }
     };
+
     const handlePlayPause = () => {
         if (audioRef.current) {
             if (audioRef.current.paused) {
                 audioRef.current.play();
+                setPlayPauseText("일시정지");
             } else {
                 audioRef.current.pause();
+                setPlayPauseText("재생");
             }
-            setPlayPauseText((prevText) =>
-                prevText === "재생" ? "일시정지" : "재생"
-            );
         }
     };
 
     useEffect(() => {
-        if (audioRef.current) {
+        if (audioRef.current && !enabled) {
             const prefix = currentFrequencyIndex % 2 === 0 ? "left" : "right";
             const frequency = frequencies[currentFrequencyIndex].replace(/\D/g, "");
             const audioFile = `/${prefix}_${frequency}Hz.mp3`;
@@ -280,7 +285,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
         <StyledContent>
             <WrapTestContainer>
                 <p>{currentFrequencyIndex + 1} / {frequencies.length}</p>
-            <div className="progress-bar-container">
+                <div className="progress-bar-container">
                     <div
                         className="progress-bar"
                         style={{
@@ -308,7 +313,7 @@ export const TestPageComponents = ({ testerName }: { testerName: string }) => {
                         type="audio/mp3"
                     />
                 </audio>
-                <PlayPauseBtn onClick={handlePlayPause}>{playPauseText}</PlayPauseBtn>
+                <PlayPauseBtn onClick={handlePlayPause} disabled={enabled} enabled={enabled}>{playPauseText}</PlayPauseBtn>
                 <WrapSelectBtnContainer enabled={enabled}>
                     {buttonAns.map((response, index) => (
                         <response.style

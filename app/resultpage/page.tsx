@@ -10,7 +10,9 @@ const ResultPage = ({ searchParams }: {
     }
 }) => {
     const { name, resultMessage, scores } = searchParams;
-    if (!name || !resultMessage) redirect("/");
+    if (!name || !resultMessage) {
+        redirect("/");
+    }
 
     return (
         <>
