@@ -66,7 +66,7 @@ const ResetBtnContainer = styled.div(() => `
 
 const TestStandardContainer = styled.div(() => `
     width: 100%;
-    max-width: 50%;
+    max-width: 70%;
     background-color: #EFEFEF;
     margin: 20px auto;
     padding: 16px;
@@ -89,7 +89,7 @@ const TestStandardContainer = styled.div(() => `
 
 const ResultAge = styled.p(() => `
     color: #0075FF;
-    font-size: 30px;
+    font-size: 42px;
     font-weight: bold;
     margin: 14px 0;
 `);
@@ -98,6 +98,7 @@ const TotalScore = styled.p(() => `
     font-size: 24px;
     font-weight: bold;
     margin: 14px 0;
+    color: #929292;
 `);
 
 const StyledCopyURL = styled.button<{ copied: boolean }>(() => `
@@ -105,7 +106,7 @@ const StyledCopyURL = styled.button<{ copied: boolean }>(() => `
     align-items: center;
     justify-content: center;
     padding: 14px;
-    background-color: #E0E0E0;
+    background-color: #0075FF;  
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -113,18 +114,25 @@ const StyledCopyURL = styled.button<{ copied: boolean }>(() => `
     font-weight: bold;
     color: #0075FF;
     position: relative;
+    margin-left: 8px;
 
     & svg {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
-        fill: #0075FF;
+        width: 20px;
+        height: 20px;
+        margin-right: 2px;
+        fill: #FFFFFF;
+    }
+
+    @media(max-width: 672px) {
+        max-width: 90%;
     }
 `);
 
 const CopyUrlContainer = styled.div(() => `
     display: flex;
     width: 100%;
+    margin: 20px auto;
+    max-width: 70%;
     background-color: #F0F0F0;
     border-radius: 12px;
     padding: 8px;
@@ -135,18 +143,36 @@ const CopyUrlContainer = styled.div(() => `
         border-radius: 10px;
         white-space: nowrap;
         overflow-x: scroll;
-        padding: 8px;
+        padding: 8px 8px 0 8px;
 
         & P {
             margin: 0;
             font-weight: bold;
+            color: #929292;
+        } 
+        
+        &::-webkit-scrollbar {
+            height: 6px;     
+        } 
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 12px;
+            background-color: #0075FF;
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 12px;
+            opacity: 0;
         }
     }
 
     & span {
         font-size: 14px;
-        color: #929292;
-        margin-bottom: 10px;
+        color: #FFFFFF;
+    }
+
+    @media(max-width: 672px) {
+        max-width: 90%;
     }
 `);
 
