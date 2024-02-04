@@ -196,7 +196,7 @@ export const Main = () => {
                 <Link href={{
                     pathname: "/testpage",
                     query: {
-                        name,
+                        name: encodeURIComponent(name),
                         checked
                     }
                 }}>
