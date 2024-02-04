@@ -234,19 +234,19 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
 
     const determineResult = (finalScore: number): void => {
         if (finalScore >= 25) {
-            setResultMessage("10대");
+            setResultMessage("10");
         } else if (finalScore > 20) {
-            setResultMessage("20대");
+            setResultMessage("20");
         } else if (finalScore > 15) {
-            setResultMessage("30대");
+            setResultMessage("30");
         } else if (finalScore > 10) {
-            setResultMessage("40대");
+            setResultMessage("40");
         } else if (finalScore > 6) {
-            setResultMessage("50대");
+            setResultMessage("50");
         } else if (finalScore > 2) {
-            setResultMessage("60대");
+            setResultMessage("60");
         } else {
-            setResultMessage("70대 이상");
+            setResultMessage("70");
         }
     };
 

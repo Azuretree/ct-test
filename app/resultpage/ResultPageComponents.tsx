@@ -228,9 +228,8 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
         },
     };
 
-    const calculateTotalScore = (): number => {
-        return scores.map(e => Number(e)).reduce((acc, curr) => acc + curr, 0);
-    };
+    const calculateTotalScore: number = scores.map(e => Number(e)).reduce((acc, curr) => acc + curr, 0);
+
 
     useEffect(() => {
         setCurrentUrl(window.location.href);
@@ -248,8 +247,8 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
             <div className="contents-container">
                 <img src="/result.png" width={200} />
                 <h1>{decodeURIComponent(name)}님의<br /> 청력 테스트 결과는?</h1>
-                <ResultAge>{decodeURIComponent(resultMessage)}</ResultAge>
-                <TotalScore>총점: {calculateTotalScore()}점</TotalScore>
+                <ResultAge>{decodeURIComponent(resultMessage)}대</ResultAge>
+                <TotalScore>총점: {calculateTotalScore}점</TotalScore>
                 <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>
                 <Line data={data} options={options} />
                 <h2>결과 링크 공유하기</h2>
