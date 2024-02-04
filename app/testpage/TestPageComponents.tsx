@@ -335,8 +335,8 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
                                 href={{
                                     pathname: "/resultpage",
                                     query: {
-                                        resultMessage: encodeURIComponent(resultMessage),
-                                        name: testerName,
+                                        name: encodeURIComponent(testerName),
+                                        resultmessage: encodeURIComponent(resultMessage),
                                         scores,
                                     },
                                 }}

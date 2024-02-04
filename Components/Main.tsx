@@ -103,7 +103,7 @@ const CheckboxLabel = styled.label(() => `
 
 const ErrorContainer = styled.div(() => `
     width: 100%;
-    max-width: 25vw;
+    max-width: 15vw;
     margin: 20px auto;
     background-color: #FF5C5C;
     color: #FFFFFF;
@@ -120,15 +120,23 @@ const ErrorContainer = styled.div(() => `
         margin-right: 8px;
     }
 
-    @media(max-width: 672px) {
+    @media(max-width: 972px) {
         max-width: 65vw;
     }
 `);
 
 export const Main = () => {
-    const [name, setName] = useState<string>('');
+    const [name, setName] = useState<string>("");
     const [checked, setChecked] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
+
+    useEffect(() => {
+        // 이름이 변경될 때마다 실행되는 부분
+        if (name.trim() !== "") {
+            setChecked(false);
+            setError('');
+        }
+    }, [name]);
 
     const handleStartButtonClick = () => {
         setChecked(true);
@@ -153,7 +161,7 @@ export const Main = () => {
                 <li>이 사이트는 전문 의료용이 아닌 단순 재미를 위해 만들어졌어요. 과몰입에 주의해주세요!</li>
                 <li>이름을 입력 후 시작하기 버튼을 누르시면 주파수 별로 왼쪽, 오른쪽 귀를 번갈아가며 테스트할거에요.</li>
                 <li>청력 테스트이기 때문에 헤드폰 혹은 이어폰 착용 후 테스트에 참여하는 것을 추천해요.</li>
-                <li>정상적이지 않은 방법으로 사이트 접근시도 시 사이트 내에서 감지하여 다시 홈으로 돌아와요.</li>
+                <li>테스트 도중 주소창에 주소를 임의적으로 수정하거나 삭제하면 비정상적인 접근으로 감지해 홈으로 돌아올 수 있어요. 검사 기록 안날라가게 주의해주세요.</li>
             </InfoContainer>
             <CheckboxLabel htmlFor="customCheckbox">
                 <input
@@ -161,7 +169,7 @@ export const Main = () => {
                     checked={checked}
                     onChange={(e) => {
                         setChecked(e.target.checked);
-                        if (name.trim() === '') {
+                        if (name.trim() === "") {
                             setError('ErrorMessage: 이름을 입력해주세요.');
                             setChecked(false);
                         } else {
@@ -188,8 +196,8 @@ export const Main = () => {
                 <Link href={{
                     pathname: "/testpage",
                     query: {
-                        name: encodeURIComponent(name),
-                        checked: encodeURIComponent(checked)
+                        name,
+                        checked
                     }
                 }}>
                     <StartButton

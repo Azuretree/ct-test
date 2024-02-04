@@ -8,6 +8,8 @@ const TestPage = ({ searchParams }: any) => {
     const hasChecked = searchParams.checked;
     if (!testerName || hasChecked === 'false') redirect("/");
 
+    console.log(testerName, hasChecked);
+
     return (
         <>
             <TestPageComponents testerName={testerName} />

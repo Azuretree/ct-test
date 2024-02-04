@@ -5,18 +5,20 @@ import { redirect } from "next/navigation";
 const ResultPage = ({ searchParams }: {
     searchParams: {
         name: string,
-        resultMessage: string,
+        resultmessage: string,
         scores: number[]
     }
 }) => {
-    const { name, resultMessage, scores } = searchParams;
-    if (!name || !resultMessage) {
+    const { name, resultmessage, scores } = searchParams;
+    if (!name || !resultmessage) {
         redirect("/");
     }
 
+    console.log(name, resultmessage, scores);
+
     return (
         <>
-            <ResultPageComponents name={name} resultMessage={resultMessage} scores={scores} />
+            <ResultPageComponents name={name} resultMessage={resultmessage} scores={scores} />
         </>
     );
 };
