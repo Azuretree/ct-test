@@ -187,7 +187,10 @@ export const Main = () => {
             <StartBtnContainer>
                 <Link href={{
                     pathname: "/testpage",
-                    query: { name: encodeURIComponent(name) }
+                    query: {
+                        name: encodeURIComponent(name),
+                        checked: encodeURIComponent(checked)
+                    }
                 }}>
                     <StartButton
                         disabled={name.trim() === '' || !checked}

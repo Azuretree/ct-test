@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 const TestPage = ({ searchParams }: any) => {
 
     const testerName: string = searchParams.name;
-    if (!testerName) redirect("/");
+    const hasChecked = searchParams.checked;
+    if (!testerName || hasChecked === 'false') redirect("/");
 
     return (
         <>
