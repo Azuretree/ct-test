@@ -164,6 +164,8 @@ export const Main = () => {
                         if (name.trim() === '') {
                             setError('ErrorMessage: 이름을 입력해주세요.');
                             setChecked(false);
+                        } else {
+                            setError('');
                         }
                     }}
                 />
