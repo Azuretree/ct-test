@@ -213,7 +213,7 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
     const [playPauseText, setPlayPauseText] = useState<string>("일시정지");
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const handleButtonClick = (score: number) => {
+    const handleButtonClick = (score: number): void => {
         if (currentFrequencyIndex < frequencies.length - 1) {
             setCurrentFrequencyIndex(currentFrequencyIndex + 1);
             setScores((prevScores) => [...prevScores, score]);
@@ -232,7 +232,7 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
         }
     };
 
-    const determineResult = (finalScore: number) => {
+    const determineResult = (finalScore: number): void => {
         if (finalScore >= 25) {
             setResultMessage("10대");
         } else if (finalScore > 20) {
@@ -250,7 +250,7 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
         }
     };
 
-    const handlePlayPause = () => {
+    const handlePlayPause = (): void => {
         if (audioRef.current) {
             if (audioRef.current.paused) {
                 audioRef.current.play();
@@ -264,9 +264,9 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
 
     useEffect(() => {
         if (audioRef.current && !enabled) {
-            const prefix = currentFrequencyIndex % 2 === 0 ? "left" : "right";
-            const frequency = frequencies[currentFrequencyIndex].replace(/\D/g, "");
-            const audioFile = `/${prefix}_${frequency}Hz.mp3`;
+            const prefix: string = currentFrequencyIndex % 2 === 0 ? "left" : "right";
+            const frequency: string = frequencies[currentFrequencyIndex].replace(/\D/g, "");
+            const audioFile: string = `/${prefix}_${frequency}Hz.mp3`;
 
             audioRef.current.src = audioFile;
             audioRef.current.load();

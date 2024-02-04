@@ -186,7 +186,7 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
     const [copied, setCopied] = useState<boolean>(false);
     const [currentUrl, setCurrentUrl] = useState<string>("");
 
-    const labels = frequencies;
+    const labels: string[] = frequencies;
     const data = {
         labels,
         datasets: [
@@ -212,7 +212,7 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
             y: {
                 ticks: {
                     stepSize: 1,
-                    callback: (value: number | any) => {
+                    callback: (value: number | {}) => {
                         if (value === 0) {
                             return buttonAns[2].label;
                         } else if (value === 1) {
@@ -228,7 +228,7 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
         },
     };
 
-    const calculateTotalScore = () => {
+    const calculateTotalScore = (): number => {
         return scores.map(e => Number(e)).reduce((acc, curr) => acc + curr, 0);
     };
 
@@ -236,8 +236,8 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
         setCurrentUrl(window.location.href);
     }, []);
 
-    const copyUrlToClipboard = () => {
-        const fullUrl = window.location.href;
+    const copyUrlToClipboard = (): void => {
+        const fullUrl: string = window.location.href;
         navigator.clipboard.writeText(fullUrl);
         setCopied(true);
     };

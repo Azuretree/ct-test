@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import StyledContent from "@/app/style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 const StartButton = styled.button<{ enabled: boolean }>(({ enabled }) => `
@@ -70,18 +70,17 @@ const InfoContainer = styled.div(() => `
 const CheckboxLabel = styled.label(() => `
     display: flex;
     align-items: center;
-    margin-top: 10px;
     font-size: 14px;
     color: #525252;
-    margin: 20px auto;
+    margin: 10px auto;
 
     input {
         margin-right: 8px;
         appearance: none;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         border: 1px solid grey;
-        border-radius: 4px;
+        border-radius: 10px;
         cursor: pointer;
         outline: none;
         transition: border-color 0.3s ease;
@@ -102,13 +101,42 @@ const CheckboxLabel = styled.label(() => `
     }
 `);
 
+const ErrorContainer = styled.div(() => `
+    width: 100%;
+    max-width: 25vw;
+    margin: 20px auto;
+    background-color: #FF5C5C;
+    color: #FFFFFF;
+    font-size: 14px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 12px;
+
+    & svg {
+        position: relative;
+        top: 2px;
+        width: 18px;
+        height: 16px;
+        margin-right: 8px;
+    }
+
+    @media(max-width: 672px) {
+        max-width: 65vw;
+    }
+`);
+
 export const Main = () => {
     const [name, setName] = useState<string>('');
     const [checked, setChecked] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
 
-    const handleStartButtonClick = () => {
-        setChecked(true);
-    };
+    useEffect(() => {
+        // 이름이 변경될 때마다 실행되는 부분
+        if (name.trim() !== '') {
+            setChecked(false);
+            setError('');
+        }
+    }, [name]);
 
     return (
         <StyledContent>
@@ -121,7 +149,6 @@ export const Main = () => {
                 value={name}
                 onChange={(e) => {
                     setName(e.target.value);
-                    if (name.trim() !== '' && checked) setChecked(false);
                 }}
             />
             <InfoContainer>
@@ -138,13 +165,24 @@ export const Main = () => {
                     onChange={(e) => {
                         setChecked(e.target.checked);
                         if (name.trim() === '') {
-                            alert('이름을 입력해주세요.');
+                            setError('ErrorMessage: 이름을 입력해주세요.');
                             setChecked(false);
+                        } else if (name.trim() !== '') {
+                            // 에러 메시지 초기화
+                            setError('');
                         }
                     }}
                 />
                 위 주의사항을 읽었으며, 테스트를 시작할게요.
             </CheckboxLabel>
+            {error &&
+                <ErrorContainer>
+                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.19914 1C7.96894 -0.333333 9.89344 -0.333333 10.6632 1L17.5914 13C18.3612 14.3333 17.399 16 15.8594 16H2.00298C0.463383 16 -0.498867 14.3333 0.270933 13L7.19914 1ZM7.93119 5.5C7.93119 4.94771 8.3789 4.5 8.93119 4.5C9.48347 4.5 9.93119 4.94771 9.93119 5.5V9.5C9.93119 10.0523 9.48347 10.5 8.93119 10.5C8.3789 10.5 7.93119 10.0523 7.93119 9.5V5.5ZM8.93119 11.5C8.3789 11.5 7.93119 11.9477 7.93119 12.5C7.93119 13.0523 8.3789 13.5 8.93119 13.5C9.48347 13.5 9.93119 13.0523 9.93119 12.5C9.93119 11.9477 9.48347 11.5 8.93119 11.5Z" fill="white" />
+                    </svg>
+                    {error}
+                </ErrorContainer>
+            }
             <StartBtnContainer>
                 <Link href={{
                     pathname: "/testpage",
@@ -153,7 +191,6 @@ export const Main = () => {
                     <StartButton
                         disabled={name.trim() === '' || !checked}
                         enabled={name.trim() !== '' && checked}
-                        onClick={handleStartButtonClick}
                     >
                         시작하기
                     </StartButton>
