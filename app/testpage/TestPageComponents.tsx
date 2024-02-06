@@ -192,6 +192,18 @@ export const frequencies: string[] = [
     "(오른쪽) 4000",
     "(왼쪽) 8000",
     "(오른쪽) 8000",
+    "(왼쪽) 10000",
+    "(오른쪽) 10000",
+    "(왼쪽) 12000",
+    "(오른쪽) 12000",
+    "(왼쪽) 15000",
+    "(오른쪽) 15000",
+    "(왼쪽) 16000",
+    "(오른쪽) 16000",
+    "(왼쪽) 18000",
+    "(오른쪽) 18000",
+    "(왼쪽) 20000",
+    "(오른쪽) 20000",
 ];
 
 export const buttonAns = [
@@ -233,17 +245,17 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
     };
 
     const determineResult = (finalScore: number): void => {
-        if (finalScore >= 25) {
+        if (finalScore >= 50) {
             setResultMessage("10");
-        } else if (finalScore > 20) {
+        } else if (finalScore > 40) {
             setResultMessage("20");
-        } else if (finalScore > 15) {
+        } else if (finalScore > 30) {
             setResultMessage("30");
-        } else if (finalScore > 10) {
+        } else if (finalScore > 20) {
             setResultMessage("40");
-        } else if (finalScore > 6) {
+        } else if (finalScore > 10) {
             setResultMessage("50");
-        } else if (finalScore > 2) {
+        } else if (finalScore > 5) {
             setResultMessage("60");
         } else {
             setResultMessage("70");
@@ -336,7 +348,6 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
                                     pathname: "/resultpage",
                                     query: {
                                         name:
-
                                             testerName,
                                         resultmessage: encodeURIComponent(resultMessage),
                                         scores,

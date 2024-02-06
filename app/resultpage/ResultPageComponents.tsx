@@ -276,13 +276,13 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
                 </ResetBtnContainer>
                 <TestStandardContainer>
                     <h2>테스트 기준</h2>
-                    <p>25점 이상: 10대</p>
-                    <p>24점 ~ 21점: 20대</p>
-                    <p>20점 ~ 16점: 30대</p>
-                    <p>15점 ~ 11점: 40대</p>
-                    <p>10점 ~ 7점: 50대</p>
-                    <p>6점 ~ 3점: 60대</p>
-                    <p>2점 이하: 70대 이상</p>
+                    <p>50점 이상: 10대</p>
+                    <p>49점 ~ 41점: 20대</p>
+                    <p>40점 ~ 31점: 30대</p>
+                    <p>30점 ~ 21점: 40대</p>
+                    <p>20점 ~ 11점: 50대</p>
+                    <p>10점 ~ 6점: 60대</p>
+                    <p>5점 이하: 70대 이상</p>
                 </TestStandardContainer>
             </div>
         </StyledContent>
