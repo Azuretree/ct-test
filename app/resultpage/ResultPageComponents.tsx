@@ -230,7 +230,7 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({ name
 
     const calculateTotalScore: number = scores.map(e => Number(e)).reduce((acc, curr) => acc + curr, 0);
     const nameResult = decodeURIComponent(name);
-    console.log(nameResult);
+
     useEffect(() => {
         setCurrentUrl(window.location.href);
     }, []);

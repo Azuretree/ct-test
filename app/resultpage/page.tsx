@@ -14,8 +14,6 @@ const ResultPage = ({ searchParams }: {
         redirect("/");
     }
 
-    console.log(name, resultmessage, scores);
-
     return (
         <>
             <ResultPageComponents name={name} resultMessage={resultmessage} scores={scores} />
