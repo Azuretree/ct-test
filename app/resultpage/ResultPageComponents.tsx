@@ -15,6 +15,7 @@ import { Bar } from "react-chartjs-2";
 import { buttonAns, frequencies } from "../testpage/TestPageComponents";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import { AccordionItem } from "@/Components/AccordionItem";
 
 ChartJS.register(
   CategoryScale,
@@ -60,31 +61,6 @@ const ResetBtnContainer = styled.div(
     width: 100%;
     max-width: 320px;
     margin: 20px auto;
-`
-);
-
-const TestStandardContainer = styled.div(
-  () => `
-    width: 100%;
-    max-width: 70%;
-    background-color: #EFEFEF;
-    margin: 20px auto;
-    padding: 16px;
-    border-radius: 12px;    
-
-    & h2 {
-        margin: 0;
-    }
-
-    & p {
-        margin: 0;
-        color: #929292;
-        margin: 10px 0;
-    }
-
-    @media(max-width: 672px) {
-        max-width: 90%;
-    }
 `
 );
 
@@ -200,37 +176,37 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({
   const [currentUrl, setCurrentUrl] = useState<string>("");
 
   // 주파수 배열을 "왼쪽"과 "오른쪽"의 쌍으로 묶은 배열 생성
-const pairedFrequencies: string[][] = [];
-for (let i = 0; i < frequencies.length; i += 2) {
+  const pairedFrequencies: string[][] = [];
+  for (let i = 0; i < frequencies.length; i += 2) {
     pairedFrequencies.push([frequencies[i], frequencies[i + 1]]);
-}
+  }
 
-// 라벨 배열 생성
-const labels: string[] = pairedFrequencies.map(pair => pair[0].substring(5)); // "왼쪽" 라벨만 사용
+  // 라벨 배열 생성
+  const labels: string[] = pairedFrequencies.map(pair => pair[0].substring(5)); // "왼쪽" 라벨만 사용
 
-// 데이터 배열 생성
-const leftScores: number[] = scores.filter((_, index) => index % 2 === 0);
-const rightScores: number[] = scores.filter((_, index) => index % 2 !== 0);
+  // 데이터 배열 생성
+  const leftScores: number[] = scores.filter((_, index) => index % 2 === 0);
+  const rightScores: number[] = scores.filter((_, index) => index % 2 !== 0);
 
-const data = {
+  const data = {
     labels,
     datasets: [
-        {
-            label: '왼쪽',
-            data: leftScores,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
-            borderColor: 'rgba(255, 99, 132, 1)', // 예시 색상, 원하는 색상으로 변경 가능
-            borderWidth: 1,
-        },
-        {
-            label: '오른쪽',
-            data: rightScores,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
-            borderColor: 'rgba(54, 162, 235, 1)', // 예시 색상, 원하는 색상으로 변경 가능
-            borderWidth: 1,
-        },
+      {
+        label: '왼쪽',
+        data: leftScores,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
+        borderColor: 'rgba(255, 99, 132, 1)', // 예시 색상, 원하는 색상으로 변경 가능
+        borderWidth: 1,
+      },
+      {
+        label: '오른쪽',
+        data: rightScores,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
+        borderColor: 'rgba(54, 162, 235, 1)', // 예시 색상, 원하는 색상으로 변경 가능
+        borderWidth: 1,
+      },
     ],
-};
+  };
 
   const options = {
     responsive: true,
@@ -288,7 +264,8 @@ const data = {
         <TotalScore>총점: {calculateTotalScore}점</TotalScore>
         <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>
         <Bar data={data} options={options} />
-        <h2>결과 링크 공유하기</h2>
+        <AccordionItem />
+        <h2>🧷 결과 링크 공유하기</h2>
         <CopyUrlContainer>
           <div className="current-url">
             <p>{currentUrl}</p>
@@ -325,16 +302,6 @@ const data = {
             </ResetBtn>
           </Link>
         </ResetBtnContainer>
-        <TestStandardContainer>
-          <h2>테스트 기준</h2>
-          <p>50점 이상: 10대</p>
-          <p>49점 ~ 41점: 20대</p>
-          <p>40점 ~ 31점: 30대</p>
-          <p>30점 ~ 21점: 40대</p>
-          <p>20점 ~ 11점: 50대</p>
-          <p>10점 ~ 6점: 60대</p>
-          <p>5점 이하: 70대 이상</p>
-        </TestStandardContainer>
       </div>
     </StyledContent>
   );

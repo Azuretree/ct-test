@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={noto_sans_kr.className}>{children}</body>
+      <body className={noto_sans_kr.className} style={{ backgroundColor: "F5F5F5" }}>{children}</body>
     </html>
   );
 }

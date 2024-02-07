@@ -208,8 +208,8 @@ export const frequencies: string[] = [
 
 export const buttonAns = [
     { label: "네, 잘들려요", score: 2, style: GreenButton },
-    { label: "잘 모르겠어요.", score: 1, style: GrayButton },
-    { label: "아니요, 잘 안들려요.", score: 0, style: RedButton },
+    { label: "잘 모르겠어요.", score: 0, style: GrayButton },
+    { label: "아니요, 잘 안들려요.", score: -1, style: RedButton },
 ];
 
 interface TesterNameProps {
