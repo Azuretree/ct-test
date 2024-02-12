@@ -120,7 +120,7 @@ const CopyUrlContainer = styled.div(
         overflow-x: scroll;
         padding: 8px 8px 0 8px;
 
-        & P {
+        & p {
             margin: 0;
             font-weight: bold;
             color: #929292;
@@ -144,10 +144,6 @@ const CopyUrlContainer = styled.div(
     & span {
         font-size: 14px;
         color: #FFFFFF;
-    }
-
-    @media(max-width: 672px) {
-        max-width: 90%;
     }
 `
 );
@@ -173,7 +169,7 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({
   }
 
   // 라벨 배열 생성
-  const labels: string[] = pairedFrequencies.map(pair => pair[0].substring(5)); // "왼쪽" 라벨만 사용
+  const labels: string[] = pairedFrequencies.map(pair => pair[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // "왼쪽" 라벨만 사용
 
   // 데이터 배열 생성
   const leftScores: number[] = scores.filter((_, index) => index % 2 === 0);

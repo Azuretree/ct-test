@@ -316,7 +316,7 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
                 <h2>현재 주파수가 잘 들리나요?</h2>
                 <p className="frequency-way-container">{translateKo}</p>
                 <CurrentFrequency>
-                    {frequencies[currentFrequencyIndex]}Hz
+                    {frequencies[currentFrequencyIndex].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}Hz
                 </CurrentFrequency>
                 <audio ref={audioRef} autoPlay loop>
                     <source
