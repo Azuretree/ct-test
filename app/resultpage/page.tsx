@@ -2,13 +2,15 @@ import React from "react";
 import { ResultPageComponents } from "./ResultPageComponents";
 import { redirect } from "next/navigation";
 
-const ResultPage = ({ searchParams }: {
+interface ResultPageProps {
     searchParams: {
         name: string,
         resultmessage: string,
         scores: number[]
     }
-}) => {
+}
+
+const ResultPage = <T extends ResultPageProps>({ searchParams }: T) => {
     const { name, resultmessage, scores } = searchParams;
     if (!name || !resultmessage) {
         redirect("/");

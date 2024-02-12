@@ -4,8 +4,6 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 
 const AccordionItemContainer = styled.div(() => `
-    width: 100%;
-    max-width: 70%;
     margin: 20px auto;
     background-color: #EFEFEF;
     border-radius: 12px;
@@ -58,8 +56,6 @@ const AccordionItemContent = styled.div<{ isOpen: boolean }>(
 
 const TestStandardContainer = styled.div(
     () => `
-      width: 100%;
-      max-width: 80%;
       background-color: #FFFFFF;
       margin: 20px auto;
       padding: 16px;

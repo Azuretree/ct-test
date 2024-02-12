@@ -6,6 +6,7 @@ import Image from "next/image";
 import StyledContent from "@/app/style";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 
 const StartButton = styled.button<{ enabled: boolean }>(({ enabled }) => `
     width: 100%;
@@ -27,8 +28,6 @@ const StartBtnContainer = styled.div(() => `
 `)
 
 const NameInput = styled.input(() => `
-    width: 100%;
-    max-width: 30%;
     margin: 14px auto;
     padding: 16px;
     border-radius: 12px;
@@ -44,8 +43,6 @@ const NameInput = styled.input(() => `
 `);
 
 const InfoContainer = styled.div(() => `
-    width: 100%;
-    max-width: 50%;
     background-color: #EFEFEF;
     margin: 20px auto;
     padding: 16px;
@@ -102,8 +99,6 @@ const CheckboxLabel = styled.label(() => `
 `);
 
 const ErrorContainer = styled.div(() => `
-    width: 100%;
-    max-width: 15vw;
     margin: 20px auto;
     background-color: #FF5C5C;
     color: #FFFFFF;
@@ -192,23 +187,48 @@ export const Main = () => {
                     {error}
                 </ErrorContainer>
             )}
-            <StartBtnContainer>
-                <Link href={{
-                    pathname: "/testpage",
-                    query: {
-                        name: encodeURIComponent(name),
-                        checked
-                    }
-                }}>
-                    <StartButton
+
+            <AlertDialog.Root>
+                <AlertDialog.Trigger>
+                    <Button
+                        color="blue"
+                        radius="large"
+                        size="3"
                         disabled={name.trim() === '' || !checked}
-                        enabled={name.trim() !== '' && checked}
                         onClick={handleStartButtonClick}
                     >
                         시작하기
-                    </StartButton>
-                </Link>
-            </StartBtnContainer>
+                    </Button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content style={{ maxWidth: 450 }}>
+                    <AlertDialog.Title size="5">알림</AlertDialog.Title>
+                    <AlertDialog.Description size="3">
+                        <strong>{name}</strong>님, 환영합니다.
+                        테스트를 진행할까요?
+                    </AlertDialog.Description>
+
+                    <Flex gap="3" mt="4" justify="end">
+                        <AlertDialog.Cancel>
+                            <Button variant="soft" color="gray">
+                                취소
+                            </Button>
+                        </AlertDialog.Cancel>
+                        <AlertDialog.Action>
+                            <Link href={{
+                                pathname: "/testpage",
+                                query: {
+                                    name: encodeURIComponent(name),
+                                    checked
+                                }
+                            }}>
+                                <Button variant="solid" color="blue">
+                                    시작하기
+                                </Button>
+                            </Link>
+                        </AlertDialog.Action>
+                    </Flex>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
         </StyledContent>
     );
 };

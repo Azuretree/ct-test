@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from "react";
 import StyledContent from "../style";
 
 export const CommonButtonStyles = `
+    width: 100%;
     padding: 14px;
     font-size: 16px;
     cursor: pointer;
@@ -33,7 +34,7 @@ export const WrapTestContainer = styled.div(
         outline: none;
     }
 
-    .progress-bar-container {
+    & .progress-bar-container {
         width: 100%;
         height: 10px;
         background-color: #EDEDED; /* 프로그레스 바 컨테이너의 배경 색 */
@@ -41,11 +42,18 @@ export const WrapTestContainer = styled.div(
         margin-top: 10px;
     }
 
-    .progress-bar {
+    & .progress-bar {
         height: 100%;
         border-radius: 5px;
         background-color: #0075FF; /* 검은색 프로그레스 바 */
         transition: width 0.2s ease; /* 프로그레스 바의 너비에 애니메이션 효과 추가 */
+    }
+
+    & .frequency-way-container {
+        font-size: 22px;
+        font-weight: bold;
+        margin: 0;
+        color: #949494;
     }
 
     @media(max-width: 672px) {
@@ -57,7 +65,7 @@ export const WrapTestContainer = styled.div(
 export const CurrentFrequency = styled.p(
     () => `
     font-size: 36px;
-    margin: 0;
+    margin: 0 0 20px 0;
     font-weight: bold;
 
     @media(max-width: 672px) {
@@ -70,6 +78,7 @@ export const WrapSelectBtnContainer = styled.div<{ enabled: boolean }>(
     ({ enabled }) => `
     display: grid;
     gap: 16px;
+    margin: 16px 0;
 
     & button {
         ${CommonButtonStyles}
@@ -126,7 +135,6 @@ export const RedButton = styled.button<{ enabled: boolean }>(
 export const ResultBtn = styled.button(
     () => `
     width: 100%;
-    max-width: 100%;
     background-color: #0075FF;  
     color: #FFFFFF;
     border: none;
@@ -154,7 +162,6 @@ export const ResultBtnContainer = styled.div(
     () => `
     margin: 20px auto;
     width: 100%;
-    max-width: 50%;
 
     @media(max-width: 672px) {
         max-width: 80%;
@@ -171,39 +178,38 @@ const PlayPauseBtn = styled.button<{ enabled: boolean }>(
     cursor: pointer;
     border: none;
     border-radius: 12px;
-    margin: 20px auto;
     opacity: ${enabled ? 0.5 : 1};
     cursor: ${enabled ? "not-allowed" : "pointer"};
 `
 );
 
 export const frequencies: string[] = [
-    "(왼쪽) 125",
-    "(오른쪽) 125",
-    "(왼쪽) 250",
-    "(오른쪽) 250",
-    "(왼쪽) 500",
-    "(오른쪽) 500",
-    "(왼쪽) 1000",
-    "(오른쪽) 1000",
-    "(왼쪽) 2000",
-    "(오른쪽) 2000",
-    "(왼쪽) 4000",
-    "(오른쪽) 4000",
-    "(왼쪽) 8000",
-    "(오른쪽) 8000",
-    "(왼쪽) 10000",
-    "(오른쪽) 10000",
-    "(왼쪽) 12000",
-    "(오른쪽) 12000",
-    "(왼쪽) 15000",
-    "(오른쪽) 15000",
-    "(왼쪽) 16000",
-    "(오른쪽) 16000",
-    "(왼쪽) 18000",
-    "(오른쪽) 18000",
-    "(왼쪽) 20000",
-    "(오른쪽) 20000",
+    "125",
+    "125",
+    "250",
+    "250",
+    "500",
+    "500",
+    "1000",
+    "1000",
+    "2000",
+    "2000",
+    "4000",
+    "4000",
+    "8000",
+    "8000",
+    "10000",
+    "10000",
+    "12000",
+    "12000",
+    "15000",
+    "15000",
+    "16000",
+    "16000",
+    "18000",
+    "18000",
+    "20000",
+    "20000",
 ];
 
 export const buttonAns = [
@@ -274,9 +280,11 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
         }
     };
 
+    const prefix: string = currentFrequencyIndex % 2 === 0 ? "left" : "right";
+    const translateKo = prefix === "left" ? "왼쪽" : "오른쪽";
+
     useEffect(() => {
         if (audioRef.current && !enabled) {
-            const prefix: string = currentFrequencyIndex % 2 === 0 ? "left" : "right";
             const frequency: string = frequencies[currentFrequencyIndex].replace(/\D/g, "");
             const audioFile: string = `/${prefix}_${frequency}Hz.mp3`;
 
@@ -306,6 +314,7 @@ export const TestPageComponents = <T extends TesterNameProps>({ testerName }: T)
                     />
                 </div>
                 <h2>현재 주파수가 잘 들리나요?</h2>
+                <p className="frequency-way-container">{translateKo}</p>
                 <CurrentFrequency>
                     {frequencies[currentFrequencyIndex]}Hz
                 </CurrentFrequency>

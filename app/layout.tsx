@@ -1,3 +1,4 @@
+import '@radix-ui/themes/styles.css';
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 

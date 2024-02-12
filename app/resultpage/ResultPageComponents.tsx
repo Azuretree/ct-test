@@ -16,6 +16,7 @@ import { buttonAns, frequencies } from "../testpage/TestPageComponents";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { AccordionItem } from "@/Components/AccordionItem";
+import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 
 ChartJS.register(
   CategoryScale,
@@ -53,14 +54,6 @@ const ResetBtn = styled.button(
             fill: #FFFFFF;
         }
     }
-`
-);
-
-const ResetBtnContainer = styled.div(
-  () => `
-    width: 100%;
-    max-width: 320px;
-    margin: 20px auto;
 `
 );
 
@@ -114,12 +107,10 @@ const StyledCopyURL = styled.button<{ copied: boolean }>(
 const CopyUrlContainer = styled.div(
   () => `
     display: flex;
-    width: 100%;
-    margin: 20px auto;
-    max-width: 70%;
     background-color: #F0F0F0;
     border-radius: 12px;
     padding: 8px;
+    gap: 8px;
 
     & .current-url {
         background-color: #FFFFFF;
@@ -194,15 +185,15 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({
       {
         label: '왼쪽',
         data: leftScores,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
-        borderColor: 'rgba(255, 99, 132, 1)', // 예시 색상, 원하는 색상으로 변경 가능
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
       {
         label: '오른쪽',
         data: rightScores,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)', // 예시 색상, 원하는 색상으로 변경 가능
-        borderColor: 'rgba(54, 162, 235, 1)', // 예시 색상, 원하는 색상으로 변경 가능
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
     ],
@@ -254,55 +245,60 @@ export const ResultPageComponents = <T extends ResultPageComponentsProps>({
 
   return (
     <StyledContent>
-      <div className="contents-container">
-        <img src="/result.png" width={200} />
-        <h1>
-          {nameResult}님의
-          <br /> 청력 테스트 결과는?
-        </h1>
-        <ResultAge>{decodeURIComponent(resultMessage)}대</ResultAge>
-        <TotalScore>총점: {calculateTotalScore}점</TotalScore>
-        <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>
-        <Bar data={data} options={options} />
-        <AccordionItem />
-        <h2>🧷 결과 링크 공유하기</h2>
-        <CopyUrlContainer>
-          <div className="current-url">
-            <p>{currentUrl}</p>
-          </div>
-          <StyledCopyURL onClick={copyUrlToClipboard} copied={copied}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M8.465 11.293c1.133-1.133 3.109-1.133 4.242 0l.707.707 1.414-1.414-.707-.707c-.943-.944-2.199-1.465-3.535-1.465s-2.592.521-3.535 1.465L4.929 12a5.008 5.008 0 0 0 0 7.071 4.983 4.983 0 0 0 3.535 1.462A4.982 4.982 0 0 0 12 19.071l.707-.707-1.414-1.414-.707.707a3.007 3.007 0 0 1-4.243 0 3.005 3.005 0 0 1 0-4.243l2.122-2.121z"></path>
-              <path d="m12 4.929-.707.707 1.414 1.414.707-.707a3.007 3.007 0 0 1 4.243 0 3.005 3.005 0 0 1 0 4.243l-2.122 2.121c-1.133 1.133-3.109 1.133-4.242 0L10.586 12l-1.414 1.414.707.707c.943.944 2.199 1.465 3.535 1.465s2.592-.521 3.535-1.465L19.071 12a5.008 5.008 0 0 0 0-7.071 5.006 5.006 0 0 0-7.071 0z"></path>
-            </svg>
-            <span>Copy</span>
-          </StyledCopyURL>
-        </CopyUrlContainer>
-        <ResetBtnContainer>
-          <Link href="/">
-            <ResetBtn>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="855"
-                height="854"
-                viewBox="0 0 855 854"
-                fill="none"
-              >
-                <path
-                  d="M431.8 0.666656C325.133 0.666656 222.733 43.3333 145.933 111.6L137.4 43.3333C137.4 17.7333 116.067 0.66666 90.4667 4.93333C64.8667 4.93333 47.8 26.2667 52.0667 51.8667L60.6 167.067C64.8667 222.533 111.8 265.2 167.267 265.2H175.8L291 256.667C316.6 256.667 333.667 235.333 329.4 209.733C329.4 184.133 308.067 167.067 282.467 171.333L197.133 175.6C261.133 120.133 342.2 86 427.533 86C615.267 86 768.867 239.6 768.867 427.333C768.867 615.067 615.267 768.667 427.533 768.667C239.8 768.667 86.2 615.067 86.2 427.333C86.2 401.733 69.1333 384.667 43.5333 384.667C17.9333 384.667 0.866668 401.733 0.866669 427.333C0.866669 662 192.867 854 427.533 854C662.2 854 854.2 662 854.2 427.333C858.467 192.667 666.467 0.666655 431.8 0.666656Z"
-                  fill="black"
-                />
-              </svg>
-              다시하기
-            </ResetBtn>
-          </Link>
-        </ResetBtnContainer>
-      </div>
+      <img src="/result.png" width={200} />
+      <h1>
+        {nameResult}님의
+        <br /> 청력 테스트 결과는?
+      </h1>
+      <ResultAge>{decodeURIComponent(resultMessage)}대</ResultAge>
+      <TotalScore>총점: {calculateTotalScore}점</TotalScore>
+      <p>주파수를 통해 여러분의 귀를 나이별로 분석해봅니다.</p>
+      <Bar data={data} options={options} />
+      <h2>🧷 결과 링크 공유하기</h2>
+      <CopyUrlContainer>
+        <div className="current-url">
+          <p>{currentUrl}</p>
+        </div>
+        <StyledCopyURL onClick={copyUrlToClipboard} copied={copied}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M8.465 11.293c1.133-1.133 3.109-1.133 4.242 0l.707.707 1.414-1.414-.707-.707c-.943-.944-2.199-1.465-3.535-1.465s-2.592.521-3.535 1.465L4.929 12a5.008 5.008 0 0 0 0 7.071 4.983 4.983 0 0 0 3.535 1.462A4.982 4.982 0 0 0 12 19.071l.707-.707-1.414-1.414-.707.707a3.007 3.007 0 0 1-4.243 0 3.005 3.005 0 0 1 0-4.243l2.122-2.121z"></path>
+            <path d="m12 4.929-.707.707 1.414 1.414.707-.707a3.007 3.007 0 0 1 4.243 0 3.005 3.005 0 0 1 0 4.243l-2.122 2.121c-1.133 1.133-3.109 1.133-4.242 0L10.586 12l-1.414 1.414.707.707c.943.944 2.199 1.465 3.535 1.465s2.592-.521 3.535-1.465L19.071 12a5.008 5.008 0 0 0 0-7.071 5.006 5.006 0 0 0-7.071 0z"></path>
+          </svg>
+          <span>Copy</span>
+        </StyledCopyURL>
+      </CopyUrlContainer>
+      <AccordionItem />
+      <AlertDialog.Root>
+        <AlertDialog.Trigger>
+          <ResetBtn>다시하기</ResetBtn>
+        </AlertDialog.Trigger>
+        <AlertDialog.Content style={{ maxWidth: 450 }}>
+          <AlertDialog.Title size="5">주의</AlertDialog.Title>
+          <AlertDialog.Description size="3">
+            테스트를 다시 시작할까요? 현재 기록은 모두 날아갈 수 있습니다.
+          </AlertDialog.Description>
+
+          <Flex gap="3" mt="4" justify="end">
+            <AlertDialog.Cancel>
+              <Button variant="soft" color="gray">
+                취소
+              </Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action>
+              <Link href="/">
+                <Button variant="solid" color="blue">
+                  다시하기
+                </Button>
+              </Link>
+            </AlertDialog.Action>
+          </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </StyledContent>
   );
 };
